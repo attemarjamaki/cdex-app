@@ -16,3 +16,23 @@ export const PrimaryButton = ({
     </button>
   );
 };
+
+export const GoogleButton = ({
+  children,
+  onClick,
+  prefix,
+}: {
+  children: React.ReactNode;
+  onClick: () => void;
+  prefix?: React.ReactNode;
+}) => {
+  return (
+    <button
+      onClick={onClick}
+      className="bg-blue-300 hover:bg-blue-400 text-black px-6 py-2 rounded-full font-medium  transition-colors duration-200 text-center"
+    >
+      <div>{prefix}</div>
+      <div>{children}</div>
+    </button>
+  );
+};

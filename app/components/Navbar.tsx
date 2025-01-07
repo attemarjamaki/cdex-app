@@ -17,15 +17,15 @@ const Navbar = () => {
               signOut();
             }}
           >
-            Logout
+            Log out
           </PrimaryButton>
         ) : (
           <PrimaryButton
             onClick={() => {
-              signIn();
+              signIn("google");
             }}
           >
-            Signin
+            Sign in
           </PrimaryButton>
         )}
       </div>
