@@ -3,9 +3,19 @@
 import { signIn, signOut, useSession } from "next-auth/react";
 import { GoogleButton } from "./ui/Button";
 import Image from "next/image";
+import { useRouter } from "next/navigation";
+import { useEffect } from "react";
 
 const Hero = () => {
-  const session = useSession();
+  const { data: session, status } = useSession();
+  const router = useRouter();
+
+  useEffect(() => {
+    if (status === "authenticated") {
+      router.push("/dashboard");
+    }
+  }, [status, router]);
+
   return (
     <section>
       <div className="container mx-auto px-6 py-24 md:py-32 lg:py-40">
@@ -20,15 +30,7 @@ const Hero = () => {
           </p>
         </div>
         <div className="flex items-center justify-center">
-          {session.data?.user ? (
-            <GoogleButton
-              onClick={() => {
-                signOut();
-              }}
-            >
-              Log out
-            </GoogleButton>
-          ) : (
+          {!session ? (
             <GoogleButton
               onClick={() => {
                 signIn("google");
@@ -43,7 +45,7 @@ const Hero = () => {
               />
               Sign in with Google
             </GoogleButton>
-          )}
+          ) : null}{" "}
         </div>
       </div>
     </section>
