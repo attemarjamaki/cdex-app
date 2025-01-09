@@ -1,5 +1,7 @@
 "use client";
 
+import Image from "next/image";
+
 export const PrimaryButton = ({
   children,
   onClick,
@@ -10,7 +12,7 @@ export const PrimaryButton = ({
   return (
     <button
       onClick={onClick}
-      className="bg-orange-300 hover:bg-orange-400 text-black px-6 py-2 rounded-full font-medium  transition-colors duration-200 text-center"
+      className="bg-neutral-950 hover:bg-neutral-700 text-neutral-100 py-3 px-4 rounded-xl font-semibold  transition-colors duration-200 text-center"
     >
       {children}
     </button>
@@ -20,19 +22,16 @@ export const PrimaryButton = ({
 export const GoogleButton = ({
   children,
   onClick,
-  prefix,
 }: {
   children: React.ReactNode;
   onClick: () => void;
-  prefix?: React.ReactNode;
 }) => {
   return (
     <button
       onClick={onClick}
-      className="bg-blue-300 hover:bg-blue-400 text-black px-6 py-2 rounded-full font-medium  transition-colors duration-200 text-center"
+      className="flex items-center bg-neutral-100 hover:bg-neutral-200 text-neutral-800 px-4 py-3 rounded-full font-semibold transition-colors duration-200"
     >
-      <div>{prefix}</div>
-      <div>{children}</div>
+      {children}
     </button>
   );
 };
