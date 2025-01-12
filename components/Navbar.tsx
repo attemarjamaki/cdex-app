@@ -22,7 +22,7 @@ const Navbar = () => {
     <div className="bg-neutral-100 p-4">
       <div className="flex justify-between max-w-6xl mx-auto">
         <Link href={"/"} className="flex flex-col justify-center">
-          <div className="text-xl font-bold ">ShiftyFi</div>
+          <div className="text-lg font-bold ">ShiftyFi</div>
         </Link>
 
         <div>
