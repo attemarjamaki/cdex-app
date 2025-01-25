@@ -1,7 +1,7 @@
 "use client";
 
 import { signIn, signOut, useSession } from "next-auth/react";
-import { GoogleButton } from "./ui/Button";
+import { GoogleButton } from "./ui/custom-button";
 import Image from "next/image";
 import { useRouter } from "next/navigation";
 import { useEffect } from "react";

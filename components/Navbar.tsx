@@ -1,6 +1,6 @@
 "use client";
 import { signIn, signOut, useSession } from "next-auth/react";
-import { PrimaryButton } from "./ui/Button";
+import { PrimaryButton } from "./ui/custom-button";
 import { useRouter } from "next/navigation";
 import { useEffect } from "react";
 import Link from "next/link";
