@@ -10,6 +10,7 @@ import {
   Check,
 } from "lucide-react";
 import { DashboardButton } from "./ui/custom-button";
+import { useTokens } from "@/app/api/hooks/route";
 
 const Dashboard = ({ publicKey }: { publicKey: string }) => {
   const session = useSession();
@@ -21,6 +22,7 @@ const Dashboard = ({ publicKey }: { publicKey: string }) => {
     { name: "Polkadot", symbol: "DOT", balance: "50" },
   ]);
   const [copied, setCopied] = useState(false);
+  const { tokenBalances, loading } = useTokens(publicKey);
 
   const copyToClipboard = () => {
     navigator.clipboard.writeText(publicKey);
@@ -28,7 +30,15 @@ const Dashboard = ({ publicKey }: { publicKey: string }) => {
   };
 
   const profilePic = `${session.data?.user?.image}`;
-
+  /*
+  if (loading) {
+    return (
+      <div>
+        <p>Loading...</p>
+      </div>
+    );
+  }
+*/
   if (session.status === "loading") {
     return (
       <div>
