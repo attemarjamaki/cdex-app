@@ -7,12 +7,12 @@ import {
   PlusCircle,
   ArrowDownToLine,
   Shuffle,
+  Check,
 } from "lucide-react";
 import { DashboardButton } from "./ui/custom-button";
 
-const Dashboard = () => {
+const Dashboard = ({ publicKey }: { publicKey: string }) => {
   const session = useSession();
-  const [publicKey] = useState("0x1234...5678");
   const [balance] = useState("1,234.56");
   const [tokens] = useState([
     { name: "Bitcoin", symbol: "BTC", balance: "0.5" },
@@ -20,10 +20,11 @@ const Dashboard = () => {
     { name: "Cardano", symbol: "ADA", balance: "100" },
     { name: "Polkadot", symbol: "DOT", balance: "50" },
   ]);
+  const [copied, setCopied] = useState(false);
 
   const copyToClipboard = () => {
     navigator.clipboard.writeText(publicKey);
-    // maybe add later something to show that it was copied to clipboard
+    setCopied(true);
   };
 
   const profilePic = `${session.data?.user?.image}`;
@@ -45,7 +46,9 @@ const Dashboard = () => {
               Welcome back, {session.data?.user?.name}
             </h2>
             <div className="text-3xl font-bold mt-1">${balance}</div>
-            <p className="text-xs text-gray-500">Account Balance</p>
+            <p className="text-xs font-semibold text-gray-500">
+              Account Balance
+            </p>
           </div>
           <div className="flex flex-col items-end">
             <img
@@ -54,12 +57,18 @@ const Dashboard = () => {
               className="w-12 h-12 rounded-full"
             />
             <div className="flex items-center mt-3">
-              <span className="text-sm">{publicKey}</span>
+              <span className="text-sm font-medium">
+                {publicKey.slice(0, 4)}...{publicKey.slice(-4)}
+              </span>
               <button
                 onClick={copyToClipboard}
                 className="ml-2 p-1 bg-neutral-900 rounded-lg hover:bg-neutral-700 transition-colors"
               >
-                <Clipboard className="h-4 w-4 text-white" />
+                {copied ? (
+                  <Check className="h-4 w-4 text-white" />
+                ) : (
+                  <Clipboard className="h-4 w-4 text-white" />
+                )}
               </button>
             </div>
           </div>

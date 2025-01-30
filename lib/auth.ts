@@ -76,7 +76,7 @@ export const authConfig = {
                 privateKey: privateKey.toString(),
               },
             },
-            inrWallet: {
+            eurWallet: {
               create: {
                 balance: 0,
               },
