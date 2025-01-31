@@ -10,7 +10,7 @@ import {
   Check,
 } from "lucide-react";
 import { DashboardButton } from "./ui/custom-button";
-import { useTokens } from "@/app/api/hooks/route";
+//import { useTokens } from "@/app/api/hooks/route";
 
 const Dashboard = ({ publicKey }: { publicKey: string }) => {
   const session = useSession();
@@ -22,7 +22,7 @@ const Dashboard = ({ publicKey }: { publicKey: string }) => {
     { name: "Polkadot", symbol: "DOT", balance: "50" },
   ]);
   const [copied, setCopied] = useState(false);
-  const { tokenBalances, loading } = useTokens(publicKey);
+  //const { tokenBalances, loading } = useTokens(publicKey);
 
   const copyToClipboard = () => {
     navigator.clipboard.writeText(publicKey);

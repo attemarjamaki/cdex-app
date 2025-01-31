@@ -1,3 +1,4 @@
+/*
 export interface TokenDetails {
   name: string;
   mint: string;
@@ -36,3 +37,4 @@ export const SUPPORTED_TOKENS: TokenDetails[] = [
     decimals: 6,
   },
 ];
+*/
