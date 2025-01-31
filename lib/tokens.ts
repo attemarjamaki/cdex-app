@@ -13,8 +13,7 @@ export const SUPPORTED_TOKENS: TokenDetails[] = [
     id: "So11111111111111111111111111111111111111112",
     native: true,
     price: "180",
-    image:
-      "https://upload.wikimedia.org/wikipedia/commons/3/34/Solana_cryptocurrency_two.jpg",
+    image: "/icons/solana.svg",
     decimals: 9,
   },
   {
@@ -22,8 +21,7 @@ export const SUPPORTED_TOKENS: TokenDetails[] = [
     id: "EPjFWdd5AufqSSqeM2qN1xzybapC8G4wEGGkZwyTDt1v",
     native: false,
     price: "1",
-    image:
-      "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcT1vAKYEl0YffTpWSxrqEi_gmUsl-0BuXSKMQ&s",
+    image: "/icons/usdc.svg",
     decimals: 6,
   },
   {
@@ -31,8 +29,7 @@ export const SUPPORTED_TOKENS: TokenDetails[] = [
     id: "Es9vMFrzaCERmJfrF4H2FYD4KCoNkY11McCe8BenwNYB",
     native: false,
     price: "1",
-    image:
-      "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQvSxrpym7ij1Hf6zQOltcDORlrJGyj1kPf3A&s",
+    image: "/icons/usdt.svg",
     decimals: 6,
   },
 ];

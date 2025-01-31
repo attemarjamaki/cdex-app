@@ -10,19 +10,19 @@ import {
   Check,
 } from "lucide-react";
 import { DashboardButton } from "./ui/custom-button";
-//import { useTokens } from "@/app/api/hooks/route";
+import { useTokens } from "@/app/api/hooks/route";
+import { TokenTable } from "./ui/token-table";
 
 const Dashboard = ({ publicKey }: { publicKey: string }) => {
   const session = useSession();
-  const [balance] = useState("1,234.56");
-  const [tokens] = useState([
+  const [tokensCoded] = useState([
     { name: "Bitcoin", symbol: "BTC", balance: "0.5" },
     { name: "Ethereum", symbol: "ETH", balance: "2.3" },
     { name: "Cardano", symbol: "ADA", balance: "100" },
     { name: "Polkadot", symbol: "DOT", balance: "50" },
   ]);
   const [copied, setCopied] = useState(false);
-  //const { tokenBalances, loading } = useTokens(publicKey);
+  const { tokenBalances, loading } = useTokens(publicKey);
 
   const copyToClipboard = () => {
     navigator.clipboard.writeText(publicKey);
@@ -30,7 +30,7 @@ const Dashboard = ({ publicKey }: { publicKey: string }) => {
   };
 
   const profilePic = `${session.data?.user?.image}`;
-  /*
+
   if (loading) {
     return (
       <div>
@@ -38,7 +38,7 @@ const Dashboard = ({ publicKey }: { publicKey: string }) => {
       </div>
     );
   }
-*/
+
   if (session.status === "loading") {
     return (
       <div>
@@ -55,7 +55,9 @@ const Dashboard = ({ publicKey }: { publicKey: string }) => {
             <h2 className="text-lg font-medium">
               Welcome back, {session.data?.user?.name}
             </h2>
-            <div className="text-3xl font-bold mt-1">${balance}</div>
+            <div className="text-3xl font-bold mt-1">
+              ${tokenBalances?.totalBalance}
+            </div>
             <p className="text-xs font-semibold text-gray-500">
               Account Balance
             </p>
@@ -100,28 +102,7 @@ const Dashboard = ({ publicKey }: { publicKey: string }) => {
         </DashboardButton>
       </div>
 
-      <div className="bg-stone-50 rounded-xl p-4 sm:p-6">
-        <h2 className="text-lg font-semibold mb-4">Your Tokens</h2>
-        <div className="space-y-4">
-          {tokens.map((token) => (
-            <div
-              key={token.symbol}
-              className="flex items-center justify-between"
-            >
-              <div className="flex items-center space-x-4">
-                <div className="w-8 h-8 rounded-full bg-gray-200 flex items-center justify-center font-semibold">
-                  {token.symbol[0]}
-                </div>
-                <div>
-                  <p className="font-medium">{token.name}</p>
-                  <p className="text-sm text-gray-500">{token.symbol}</p>
-                </div>
-              </div>
-              <p className="font-medium">{token.balance}</p>
-            </div>
-          ))}
-        </div>
-      </div>
+      <TokenTable tokens={tokenBalances?.tokens || []} />
     </div>
   );
 };

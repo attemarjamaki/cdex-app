@@ -35,5 +35,3 @@ export async function getSupportedTokens() {
     price: prices[s.id].price,
   }));
 }
-
-getSupportedTokens();
