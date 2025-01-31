@@ -1,7 +1,6 @@
-/*
 export interface TokenDetails {
   name: string;
-  mint: string;
+  id: string;
   native: boolean;
   price: string;
   image: string;
@@ -11,7 +10,7 @@ export interface TokenDetails {
 export const SUPPORTED_TOKENS: TokenDetails[] = [
   {
     name: "SOL",
-    mint: "So11111111111111111111111111111111111111112",
+    id: "So11111111111111111111111111111111111111112",
     native: true,
     price: "180",
     image:
@@ -20,7 +19,7 @@ export const SUPPORTED_TOKENS: TokenDetails[] = [
   },
   {
     name: "USDC",
-    mint: "EPjFWdd5AufqSSqeM2qN1xzybapC8G4wEGGkZwyTDt1v",
+    id: "EPjFWdd5AufqSSqeM2qN1xzybapC8G4wEGGkZwyTDt1v",
     native: false,
     price: "1",
     image:
@@ -29,7 +28,7 @@ export const SUPPORTED_TOKENS: TokenDetails[] = [
   },
   {
     name: "USDT",
-    mint: "Es9vMFrzaCERmJfrF4H2FYD4KCoNkY11McCe8BenwNYB",
+    id: "Es9vMFrzaCERmJfrF4H2FYD4KCoNkY11McCe8BenwNYB",
     native: false,
     price: "1",
     image:
@@ -37,4 +36,3 @@ export const SUPPORTED_TOKENS: TokenDetails[] = [
     decimals: 6,
   },
 ];
-*/
