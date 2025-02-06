@@ -36,11 +36,16 @@ export const GoogleButton = ({
 
 export const DashboardButton = ({
   children,
+  onClick,
 }: {
   children: React.ReactNode;
+  onClick: () => void;
 }) => {
   return (
-    <button className="flex items-center justify-center bg-neutral-950 hover:bg-neutral-700 text-neutral-100 py-3 px-4 rounded-xl font-semibold  transition-colors duration-200 text-center text-md">
+    <button
+      className="flex items-center justify-center bg-neutral-950 hover:bg-neutral-700 text-neutral-100 py-3 px-4 rounded-xl font-semibold  transition-colors duration-200 text-center text-md"
+      onClick={onClick}
+    >
       {children}
     </button>
   );

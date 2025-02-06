@@ -12,17 +12,15 @@ import {
 import { DashboardButton } from "./ui/custom-button";
 import { useTokens } from "@/app/api/hooks/route";
 import { TokenTable } from "./ui/token-table";
+import Swap from "./Swap";
+
+type Tab = "tokens" | "send" | "add_funds" | "withdraw" | "swap";
 
 const Dashboard = ({ publicKey }: { publicKey: string }) => {
   const session = useSession();
-  const [tokensCoded] = useState([
-    { name: "Bitcoin", symbol: "BTC", balance: "0.5" },
-    { name: "Ethereum", symbol: "ETH", balance: "2.3" },
-    { name: "Cardano", symbol: "ADA", balance: "100" },
-    { name: "Polkadot", symbol: "DOT", balance: "50" },
-  ]);
   const [copied, setCopied] = useState(false);
   const { tokenBalances, loading } = useTokens(publicKey);
+  const [activeTab, setActiveTab] = useState<Tab>("tokens");
 
   const copyToClipboard = () => {
     navigator.clipboard.writeText(publicKey);
@@ -88,21 +86,31 @@ const Dashboard = ({ publicKey }: { publicKey: string }) => {
       </div>
 
       <div className="grid grid-cols-2 md:grid-cols-4 gap-2 sm:gap-4">
-        <DashboardButton>
+        <DashboardButton onClick={() => setActiveTab("send")}>
           <Send strokeWidth={3} className="mr-2 h-4 w-4" /> Send
         </DashboardButton>
-        <DashboardButton>
+        <DashboardButton onClick={() => setActiveTab("add_funds")}>
           <PlusCircle strokeWidth={3} className="mr-2 h-4 w-4" /> Add Funds
         </DashboardButton>
-        <DashboardButton>
+        <DashboardButton onClick={() => setActiveTab("withdraw")}>
           <ArrowDownToLine strokeWidth={3} className="mr-2 h-4 w-4" /> Withdraw
         </DashboardButton>
-        <DashboardButton>
+        <DashboardButton onClick={() => setActiveTab("swap")}>
           <Shuffle strokeWidth={3} className="mr-2 h-4 w-4" /> Swap
         </DashboardButton>
       </div>
 
-      <TokenTable tokens={tokenBalances?.tokens || []} />
+      <div>
+        {activeTab === "tokens" && (
+          <TokenTable tokens={tokenBalances?.tokens || []} />
+        )}
+        {activeTab === "send" && (
+          <TokenTable tokens={tokenBalances?.tokens || []} />
+        )}
+        {activeTab === "add_funds" && <div>add funds</div>}
+        {activeTab === "withdraw" && <div>withdraw</div>}
+        {activeTab === "swap" && <Swap />}
+      </div>
     </div>
   );
 };
