@@ -13,6 +13,7 @@ import { DashboardButton } from "./ui/custom-button";
 import { useTokens } from "@/app/api/hooks/route";
 import { TokenTable } from "./ui/token-table";
 import Swap from "./Swap";
+import { TokenSwap } from "./TokenSwap";
 
 type Tab = "tokens" | "send" | "add_funds" | "withdraw" | "swap";
 
@@ -108,7 +109,9 @@ const Dashboard = ({ publicKey }: { publicKey: string }) => {
           <TokenTable tokens={tokenBalances?.tokens || []} />
         )}
         {activeTab === "add_funds" && <div>add funds</div>}
-        {activeTab === "withdraw" && <div>withdraw</div>}
+        {activeTab === "withdraw" && (
+          <TokenSwap tokenBalances={tokenBalances} publicKey={publicKey} />
+        )}
         {activeTab === "swap" && (
           <Swap tokenBalances={tokenBalances} publicKey={publicKey} />
         )}

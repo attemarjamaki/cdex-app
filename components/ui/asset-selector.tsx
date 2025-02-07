@@ -3,7 +3,7 @@
 import { useState } from "react";
 import { Search, X } from "lucide-react";
 import { TokenWithbalance } from "@/app/api/hooks/route";
-
+/*
 interface Token {
   symbol: string;
   name: string;
@@ -16,11 +16,11 @@ const tokens: Token[] = [
   { symbol: "USDC", name: "USD Coin", icon: "bg-blue-500", balance: "23.40" },
   { symbol: "USDT", name: "Tether", icon: "bg-green-500", balance: "56.38" },
 ];
-
+*/
 interface AssetSelectorProps {
   isOpen: boolean;
   onClose: () => void;
-  onSelect: (token: Token) => void;
+  onSelect: (token: TokenWithbalance[]) => void;
   tokens: TokenWithbalance[];
 }
 
@@ -28,6 +28,7 @@ export function AssetSelector({
   isOpen,
   onClose,
   onSelect,
+  tokens,
 }: AssetSelectorProps) {
   const [search, setSearch] = useState("");
 
@@ -71,14 +72,13 @@ export function AssetSelector({
         <div className="max-h-[400px] space-y-2 overflow-y-auto">
           {tokens.map((token) => (
             <button
-              key={token.symbol}
-              onClick={() => onSelect(token)}
+              key={token.id}
               className="flex w-full items-center justify-between rounded-lg p-3 hover:bg-gray-100"
             >
               <div className="flex items-center gap-3">
-                <div className={`h-8 w-8 rounded-full ${token.icon}`} />
+                <div className={`h-8 w-8 rounded-full ${token.image}`} />
                 <div className="text-left">
-                  <div className="font-medium">{token.symbol}</div>
+                  <div className="font-medium">{token.name}</div>
                   <div className="text-sm text-gray-500">{token.name}</div>
                 </div>
               </div>

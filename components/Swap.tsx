@@ -25,6 +25,10 @@ export default function Swap({
 }) {
   const [baseAsset, setBaseAsset] = useState(SUPPORTED_TOKENS[0]);
   const [quoteAsset, setQuoteAsset] = useState(SUPPORTED_TOKENS[1]);
+  const [baseAmount, setBaseAmount] = useState<string>();
+  const [quoteAmount, setQuoteAmount] = useState<string>();
+  const [fetchingQuote, setFetchingQuote] = useState(false);
+  const [quoteResponse, setQuoteResponse] = useState(null);
 
   const [amount, setAmount] = useState("");
   const [isAssetSelectorOpen, setIsAssetSelectorOpen] = useState(false);
@@ -149,16 +153,6 @@ export default function Swap({
           </div>
         </div>
       </div>
-
-      <AssetSelector
-        isOpen={isAssetSelectorOpen}
-        onClose={() => setIsAssetSelectorOpen(false)}
-        onSelect={(token) => {
-          setSelectedToken(token);
-          setIsAssetSelectorOpen(false);
-        }}
-        tokens={tokenBalances?.tokens || []}
-      />
     </div>
   );
 }
