@@ -109,7 +109,9 @@ const Dashboard = ({ publicKey }: { publicKey: string }) => {
         )}
         {activeTab === "add_funds" && <div>add funds</div>}
         {activeTab === "withdraw" && <div>withdraw</div>}
-        {activeTab === "swap" && <Swap />}
+        {activeTab === "swap" && (
+          <Swap tokenBalances={tokenBalances} publicKey={publicKey} />
+        )}
       </div>
     </div>
   );

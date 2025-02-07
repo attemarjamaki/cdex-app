@@ -11,8 +11,18 @@ import {
 import Image from "next/image";
 import { SUPPORTED_TOKENS, TokenDetails } from "@/lib/tokens";
 import { AssetSelector } from "./ui/asset-selector";
+import { TokenWithbalance } from "@/app/api/hooks/route";
 
-export default function Swap() {
+export default function Swap({
+  publicKey,
+  tokenBalances,
+}: {
+  publicKey: string;
+  tokenBalances: {
+    totalBalance: number;
+    tokens: TokenWithbalance[];
+  } | null;
+}) {
   const [baseAsset, setBaseAsset] = useState(SUPPORTED_TOKENS[0]);
   const [quoteAsset, setQuoteAsset] = useState(SUPPORTED_TOKENS[1]);
 
@@ -147,6 +157,7 @@ export default function Swap() {
           setSelectedToken(token);
           setIsAssetSelectorOpen(false);
         }}
+        tokens={tokenBalances?.tokens || []}
       />
     </div>
   );

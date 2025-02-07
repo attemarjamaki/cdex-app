@@ -2,6 +2,7 @@
 
 import { useState } from "react";
 import { Search, X } from "lucide-react";
+import { TokenWithbalance } from "@/app/api/hooks/route";
 
 interface Token {
   symbol: string;
@@ -20,6 +21,7 @@ interface AssetSelectorProps {
   isOpen: boolean;
   onClose: () => void;
   onSelect: (token: Token) => void;
+  tokens: TokenWithbalance[];
 }
 
 export function AssetSelector({
@@ -30,13 +32,13 @@ export function AssetSelector({
   const [search, setSearch] = useState("");
 
   if (!isOpen) return null;
-
+  /*
   const filteredTokens = tokens.filter(
     (token) =>
       token.symbol.toLowerCase().includes(search.toLowerCase()) ||
       token.name.toLowerCase().includes(search.toLowerCase())
   );
-
+*/
   return (
     <div className="fixed inset-0 z-50 flex items-center justify-center">
       <div
@@ -67,7 +69,7 @@ export function AssetSelector({
         </div>
 
         <div className="max-h-[400px] space-y-2 overflow-y-auto">
-          {filteredTokens.map((token) => (
+          {tokens.map((token) => (
             <button
               key={token.symbol}
               onClick={() => onSelect(token)}
