@@ -50,3 +50,37 @@ export const DashboardButton = ({
     </button>
   );
 };
+
+export const SwapButton = ({
+  children,
+  onClick,
+}: {
+  children: React.ReactNode;
+  onClick: () => void;
+}) => {
+  return (
+    <button
+      onClick={onClick}
+      className="flex-1 rounded-lg bg-gray-200 px-4 py-2 text-sm font-medium text-gray-600"
+    >
+      {children}
+    </button>
+  );
+};
+
+export const CancelButton = ({
+  children,
+  onClick,
+}: {
+  children: React.ReactNode;
+  onClick: () => void;
+}) => {
+  return (
+    <button
+      onClick={onClick}
+      className="flex-1 rounded-lg bg-gray-200 px-4 py-2 text-sm font-medium text-gray-600"
+    >
+      {children}
+    </button>
+  );
+};
