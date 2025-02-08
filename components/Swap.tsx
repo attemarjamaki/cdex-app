@@ -45,6 +45,7 @@ export default function Swap({
     <div className="bg-stone-50 rounded-xl p-4 sm:p-6">
       <div className="mx-auto max-w-xl space-y-4">
         <div className="space-y-2">
+          {/*header*/}
           <div className="flex items-center justify-between">
             <h1 className="text-lg font-semibold">Swap Tokens</h1>
             <div className="flex items-center gap-0.5 text-sm text-gray-600">
@@ -61,6 +62,7 @@ export default function Swap({
           </div>
 
           <div className="rounded-xl border border-gray-200 bg-white">
+            {/*swap content top */}
             <div className="p-4">
               <div className="text-sm text-gray-600">You Pay:</div>
               <div className="mt-2 flex items-center justify-between">
@@ -93,13 +95,15 @@ export default function Swap({
                 </button>
               </div>
             </div>
-
+            {/*center icon */}
             <div className="relative flex justify-center py-2">
               <div className="absolute inset-x-0 top-1/2 -translate-y-1/2 border-t border-gray-200" />
               <button className="relative rounded-full border border-gray-200 bg-white p-2">
                 <MoveVertical className="h-4 w-4 text-gray-600" />
               </button>
             </div>
+
+            {/*swap content below */}
 
             <div className="p-4">
               <div className="text-sm text-gray-600">You Receive:</div>
@@ -132,7 +136,7 @@ export default function Swap({
               </div>
             </div>
           </div>
-
+          {/*footer */}
           <div className="flex items-center justify-between py-2">
             <button className="flex items-center gap-1 text-sm text-gray-600 hover:text-gray-900">
               <ChevronDown className="h-4 w-4" />
@@ -142,7 +146,7 @@ export default function Swap({
               <Settings className="h-5 w-5" />
             </button>
           </div>
-
+          {/*buttons */}
           <div className="flex gap-3">
             <button className="rounded-lg border border-gray-200 px-4 py-2 text-sm font-medium text-gray-600 hover:bg-gray-50">
               Cancel

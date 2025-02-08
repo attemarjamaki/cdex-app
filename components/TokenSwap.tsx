@@ -49,96 +49,102 @@ export function TokenSwap({
 
   return (
     <div className="bg-stone-50 rounded-xl p-4 sm:p-6">
-      <div className="mx-auto max-w-xl">
-        {/*header*/}
-        <div className="flex items-center justify-between">
-          <h1 className="text-lg font-semibold">Swap Tokens</h1>
-          <div className="flex items-center gap-0.5 text-sm text-gray-600">
-            Powered by
-            <Image
-              src={"/icons/jupiter.svg"}
-              height={16}
-              width={16}
-              alt="jupiter"
-              className="object-contain"
-            />
-            <span className="font-semibold">Jupiter</span>
-          </div>
-        </div>
-        {/* swap content*/}
-        <div className="rounded-xl border border-gray-200 bg-white">
-          <SwapInputRow
-            amount={baseAmount}
-            onAmountChange={(value: string) => {
-              setBaseAmount(value);
-            }}
-            onSelect={(asset) => {
-              setBaseAsset(asset);
-            }}
-            selectedToken={baseAsset}
-            title={"You pay:"}
-            topBorderEnabled={true}
-            bottomBorderEnabled={false}
-            subtitle={
-              <div className="text-slate-500 pt-1 text-sm pl-1 flex">
-                <div className="font-normal pr-1">Current Balance:</div>
-                <div className="font-semibold">
-                  {
-                    tokenBalances?.tokens.find((x) => x.name === baseAsset.name)
-                      ?.balance
-                  }{" "}
-                  {baseAsset.name}
-                </div>
-              </div>
-            }
-          />
-
-          <div className="flex justify-center">
-            <div
-              onClick={() => {
-                let baseAssetTemp = baseAsset;
-                setBaseAsset(quoteAsset);
-                setQuoteAsset(baseAssetTemp);
-              }}
-              className="cursor-pointer rounded-full w-10 h-10 border absolute mt-[-20px] bg-white flex justify-center pt-2"
-            >
-              <SwapIcon />
+      <div className="mx-auto max-w-xl space-y-4">
+        <div className="space-y-2">
+          {/*header*/}
+          <div className="flex items-center justify-between">
+            <h1 className="text-lg font-semibold">Swap Tokens</h1>
+            <div className="flex items-center gap-0.5 text-sm text-gray-600">
+              Powered by
+              <Image
+                src={"/icons/jupiter.svg"}
+                height={16}
+                width={16}
+                alt="jupiter"
+                className="object-contain"
+              />
+              <span className="font-semibold">Jupiter</span>
             </div>
           </div>
 
-          <SwapInputRow
-            inputLoading={fetchingQuote}
-            inputDisabled={true}
-            amount={quoteAmount}
-            onSelect={(asset) => {
-              setQuoteAsset(asset);
-            }}
-            selectedToken={quoteAsset}
-            title={"You receive"}
-            topBorderEnabled={false}
-            bottomBorderEnabled={true}
-          />
-        </div>
-
-        <div className="flex justify-end pt-4">
-          <PrimaryButton
-            onClick={async () => {
-              // trigger swap
-              try {
-                const res = await axios.post("/api/swap", {
-                  quoteResponse,
-                });
-                if (res.data.txnId) {
-                  alert("Swap done!");
-                }
-              } catch (e) {
-                alert("Error while sending a txn");
+          <div className="rounded-xl border border-gray-200 bg-white">
+            {/* swap content top*/}
+            <SwapInputRow
+              amount={baseAmount}
+              onAmountChange={(value: string) => {
+                setBaseAmount(value);
+              }}
+              onSelect={(asset) => {
+                setBaseAsset(asset);
+              }}
+              selectedToken={baseAsset}
+              title={"You pay:"}
+              topBorderEnabled={true}
+              bottomBorderEnabled={false}
+              subtitle={
+                <div className="text-slate-500 pt-1 text-sm pl-1 flex">
+                  <div className="font-normal pr-1">Current Balance:</div>
+                  <div className="font-semibold">
+                    {
+                      tokenBalances?.tokens.find(
+                        (x) => x.name === baseAsset.name
+                      )?.balance
+                    }{" "}
+                    {baseAsset.name}
+                  </div>
+                </div>
               }
-            }}
-          >
-            Swap
-          </PrimaryButton>
+            />
+
+            {/*center icon */}
+            <div className="flex justify-center">
+              <div
+                onClick={() => {
+                  let baseAssetTemp = baseAsset;
+                  setBaseAsset(quoteAsset);
+                  setQuoteAsset(baseAssetTemp);
+                }}
+                className="cursor-pointer rounded-full w-10 h-10 border absolute mt-[-20px] bg-white flex justify-center pt-2"
+              >
+                <SwapIcon />
+              </div>
+            </div>
+            {/*swap content below */}
+            <SwapInputRow
+              inputLoading={fetchingQuote}
+              inputDisabled={true}
+              amount={quoteAmount}
+              onSelect={(asset) => {
+                setQuoteAsset(asset);
+              }}
+              selectedToken={quoteAsset}
+              title={"You receive"}
+              topBorderEnabled={false}
+              bottomBorderEnabled={true}
+            />
+          </div>
+
+          <div className="flex justify-end pt-4">
+            <PrimaryButton
+              onClick={async () => {
+                // trigger swap
+                try {
+                  const res = await axios.post("/api/swap", {
+                    quoteResponse,
+                  });
+                  if (res.data.txnId) {
+                    alert("Swap done!");
+                  }
+                } catch (e) {
+                  alert("Error while sending a txn");
+                }
+              }}
+            >
+              Swap
+            </PrimaryButton>
+          </div>
         </div>
+        {/*header*/}
       </div>
     </div>
   );
@@ -168,16 +174,10 @@ function SwapInputRow({
   inputLoading?: boolean;
 }) {
   return (
-    <div
-      className={`flex justify-between p-6 ${
-        topBorderEnabled ? "rounded-t-xl" : ""
-      } ${bottomBorderEnabled ? "rounded-b-xl" : ""}`}
-    >
-      <div>
-        <div className="text-sm text-gray-600 mb-1">{title}</div>
-        <AssetSelector selectedToken={selectedToken} onSelect={onSelect} />
-        {subtitle}
-      </div>
+    <div className="p-4">
+      <div className="text-sm text-gray-600">{title}</div>
+      <AssetSelector selectedToken={selectedToken} onSelect={onSelect} />
+      {subtitle}
       <div>
         <input
           disabled={inputDisabled}
@@ -203,7 +203,7 @@ function AssetSelector({
   onSelect: (asset: TokenDetails) => void;
 }) {
   return (
-    <div className="w-24">
+    <div className="mt-2 flex items-center justify-between">
       <select
         onChange={(e) => {
           const selectedToken = SUPPORTED_TOKENS.find(
@@ -214,7 +214,7 @@ function AssetSelector({
           }
         }}
         id="countries"
-        className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5"
+        className="flex items-center gap-2 rounded-lg bg-gray-100 px-3 py-2 hover:bg-gray-200 transition-colors"
       >
         {SUPPORTED_TOKENS.map((token) => (
           <option key={token.name} selected={selectedToken.name == token.name}>
