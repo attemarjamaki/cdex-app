@@ -8,11 +8,14 @@ import {
   ArrowDownToLine,
   Shuffle,
   Check,
+  LoaderCircle,
 } from "lucide-react";
 import { DashboardButton } from "./ui/custom-button";
 import { useTokens } from "@/app/api/hooks/route";
-import { TokenTable } from "./ui/token-table";
+import { TokenTable } from "./TokenTable";
 import { TokenSwap } from "./TokenSwap";
+import { AddFunds } from "./AddFunds";
+import { Withdraw } from "./Withdraw";
 
 type Tab = "tokens" | "send" | "add_funds" | "withdraw" | "swap";
 
@@ -31,16 +34,16 @@ const Dashboard = ({ publicKey }: { publicKey: string }) => {
 
   if (loading) {
     return (
-      <div>
-        <p>Loading...</p>
+      <div className="flex justify-center items-center">
+        <LoaderCircle strokeWidth={3} className="h-10 w-10 animate-spin" />
       </div>
     );
   }
 
   if (session.status === "loading") {
     return (
-      <div>
-        <p>Loading...</p>
+      <div className="flex justify-center items-center">
+        <LoaderCircle strokeWidth={3} className="h-10 w-10 animate-spin" />
       </div>
     );
   }
@@ -107,8 +110,8 @@ const Dashboard = ({ publicKey }: { publicKey: string }) => {
         {activeTab === "send" && (
           <TokenTable tokens={tokenBalances?.tokens || []} />
         )}
-        {activeTab === "add_funds" && <div>add funds</div>}
-        {activeTab === "withdraw" && <div>withdraw</div>}
+        {activeTab === "add_funds" && <AddFunds />}
+        {activeTab === "withdraw" && <Withdraw />}
         {activeTab === "swap" && (
           <TokenSwap tokenBalances={tokenBalances} publicKey={publicKey} />
         )}

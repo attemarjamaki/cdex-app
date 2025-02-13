@@ -12,7 +12,7 @@ let prices: {
 const TOKEN_PRICE_REFRESH_INTERVAL = 60 * 1000; // every 60s
 
 export const connection = new Connection(
-  "https://solana-mainnet.g.alchemy.com/v2/11nlungpxs-kFffBOue_HXOhoX-BpY5q"
+  `https://solana-mainnet.g.alchemy.com/v2/${process.env.ALCHEMY_RPC}`
 );
 
 export async function getSupportedTokens() {

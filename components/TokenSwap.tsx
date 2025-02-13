@@ -2,7 +2,7 @@
 import { ReactNode, useEffect, useState } from "react";
 import { SUPPORTED_TOKENS, TokenDetails } from "../lib/tokens";
 import { TokenWithbalance } from "@/app/api/hooks/route";
-import { PrimaryButton, SwapButton } from "./ui/custom-button";
+import { SwapButton } from "./ui/custom-button";
 import axios from "axios";
 import Image from "next/image";
 import { X, ChevronDown, ArrowDownUp, Settings } from "lucide-react";
@@ -31,7 +31,7 @@ export function TokenSwap({
     setFetchingQuote(true);
     axios
       .get(
-        `https://quote-api.jup.ag/v6/quote?inputMint=${
+        `https://api.jup.ag/swap/v1/quote?inputMint=${
           baseAsset.id
         }&outputMint=${quoteAsset.id}&amount=${
           Number(baseAmount) * 10 ** baseAsset.decimals
@@ -101,7 +101,14 @@ export function TokenSwap({
             {/*center icon */}
             <div className="relative flex justify-center py-2">
               <div className="absolute inset-x-0 top-1/2 -translate-y-1/2 border-t border-gray-200" />
-              <button className="relative rounded-full border border-gray-200 bg-white p-2">
+              <button
+                onClick={() => {
+                  let baseAssetTemp = baseAsset;
+                  setBaseAsset(quoteAsset);
+                  setQuoteAsset(baseAssetTemp);
+                }}
+                className="relative rounded-full border border-gray-200 bg-white p-2"
+              >
                 <ArrowDownUp className="h-4 w-4 text-gray-600" />
               </button>
             </div>

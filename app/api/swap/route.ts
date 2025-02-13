@@ -5,8 +5,9 @@ import db from "@/app/db";
 import { Connection, Keypair, VersionedTransaction } from "@solana/web3.js";
 
 export async function POST(req: NextRequest) {
-  // add new rpcurl
-  const connection = new Connection("https://mainnet.helius-rpc.com/");
+  const connection = new Connection(
+    `https://mainnet.helius-rpc.com/?api-key=${process.env.HELIUS_RPC_API_KEY}`
+  );
   const data: {
     quoteResponse: any;
   } = await req.json();
@@ -42,7 +43,7 @@ export async function POST(req: NextRequest) {
   }
 
   const { swapTransaction } = await (
-    await fetch("https://quote-api.jup.ag/v6/swap", {
+    await fetch("https://api.jup.ag/swap/v1/swap", {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
