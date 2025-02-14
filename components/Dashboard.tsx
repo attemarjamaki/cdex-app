@@ -16,6 +16,7 @@ import { TokenTable } from "./TokenTable";
 import { TokenSwap } from "./TokenSwap";
 import { AddFunds } from "./AddFunds";
 import { Withdraw } from "./Withdraw";
+import { SendCrypto } from "./Send";
 
 type Tab = "tokens" | "send" | "add_funds" | "withdraw" | "swap";
 
@@ -87,7 +88,6 @@ const Dashboard = ({ publicKey }: { publicKey: string }) => {
           </div>
         </div>
       </div>
-
       <div className="grid grid-cols-2 md:grid-cols-4 gap-2 sm:gap-4">
         <DashboardButton onClick={() => setActiveTab("send")}>
           <Send strokeWidth={3} className="mr-2 h-4 w-4" /> Send
@@ -102,18 +102,25 @@ const Dashboard = ({ publicKey }: { publicKey: string }) => {
           <Shuffle strokeWidth={3} className="mr-2 h-4 w-4" /> Swap
         </DashboardButton>
       </div>
-
       <div>
         {activeTab === "tokens" && (
           <TokenTable tokens={tokenBalances?.tokens || []} />
         )}
         {activeTab === "send" && (
-          <TokenTable tokens={tokenBalances?.tokens || []} />
+          <SendCrypto goBack={() => setActiveTab("tokens")} />
         )}
-        {activeTab === "add_funds" && <AddFunds />}
-        {activeTab === "withdraw" && <Withdraw />}
+        {activeTab === "add_funds" && (
+          <AddFunds goBack={() => setActiveTab("tokens")} />
+        )}
+        {activeTab === "withdraw" && (
+          <Withdraw goBack={() => setActiveTab("tokens")} />
+        )}
         {activeTab === "swap" && (
-          <TokenSwap tokenBalances={tokenBalances} publicKey={publicKey} />
+          <TokenSwap
+            tokenBalances={tokenBalances}
+            publicKey={publicKey}
+            goBack={() => setActiveTab("tokens")}
+          />
         )}
       </div>
     </div>

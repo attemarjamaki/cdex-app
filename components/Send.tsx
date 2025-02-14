@@ -1,6 +1,6 @@
 import { ArrowLeft } from "lucide-react";
 
-export function AddFunds({ goBack }: { goBack: () => void }) {
+export function SendCrypto({ goBack }: { goBack: () => void }) {
   return (
     <div className="bg-stone-50 rounded-xl p-4 sm:p-6">
       <div className="flex items-center gap-2">
@@ -13,8 +13,8 @@ export function AddFunds({ goBack }: { goBack: () => void }) {
       </div>
       <div className="flex items-center justify-center h-60">
         <p className="text-lg text-center">
-          Our crystal ball says… not yet! This feature is still in the works.
-          Stay tuned!
+          Oops! Looks like you&#39;ve stumbled into a work-in-progress. Check
+          back soon!
         </p>
       </div>
     </div>

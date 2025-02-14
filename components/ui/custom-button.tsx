@@ -43,7 +43,7 @@ export const DashboardButton = ({
 }) => {
   return (
     <button
-      className="flex items-center justify-center bg-neutral-950 hover:bg-neutral-700 text-neutral-100 py-3 px-4 rounded-xl font-semibold  transition-colors duration-200 text-center text-md"
+      className="flex items-center justify-center bg-neutral-950 hover:bg-neutral-700 text-neutral-100 py-3 px-4 rounded-xl font-semibold  transition-colors duration-200 text-center"
       onClick={onClick}
     >
       {children}
@@ -54,31 +54,17 @@ export const DashboardButton = ({
 export const SwapButton = ({
   children,
   onClick,
+  disabled,
 }: {
   children: React.ReactNode;
   onClick: () => void;
+  disabled: boolean;
 }) => {
   return (
     <button
       onClick={onClick}
-      className="flex-1 rounded-lg bg-gray-200 px-4 py-2 text-sm font-medium text-gray-600"
-    >
-      {children}
-    </button>
-  );
-};
-
-export const CancelButton = ({
-  children,
-  onClick,
-}: {
-  children: React.ReactNode;
-  onClick: () => void;
-}) => {
-  return (
-    <button
-      onClick={onClick}
-      className="flex-1 rounded-lg bg-gray-200 px-4 py-2 text-sm font-medium text-gray-600"
+      disabled={disabled}
+      className="rounded-xl disabled:bg-gray-200 disabled:text-gray-600 bg-neutral-950 hover:bg-neutral-700 text-neutral-100 px-4 py-3 font-medium w-full"
     >
       {children}
     </button>

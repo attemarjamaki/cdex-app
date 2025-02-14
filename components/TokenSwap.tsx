@@ -5,13 +5,16 @@ import { TokenWithbalance } from "@/app/api/hooks/route";
 import { SwapButton } from "./ui/custom-button";
 import axios from "axios";
 import Image from "next/image";
-import { X, ChevronDown, ArrowDownUp, Settings } from "lucide-react";
+import { X, ChevronDown, ArrowDownUp, ArrowLeft } from "lucide-react";
+import { Skeleton } from "./ui/skeleton";
 
 export function TokenSwap({
   publicKey,
+  goBack,
   tokenBalances,
 }: {
   publicKey: string;
+  goBack: () => void;
   tokenBalances: {
     totalBalance: number;
     tokens: TokenWithbalance[];
@@ -23,11 +26,17 @@ export function TokenSwap({
   const [quoteAmount, setQuoteAmount] = useState<string>();
   const [fetchingQuote, setFetchingQuote] = useState(false);
   const [quoteResponse, setQuoteResponse] = useState(null);
+  const [buttonDisabled, setButtonDisabled] = useState(true);
 
   useEffect(() => {
+    // Reset quoteAmount to '0' if baseAmount is falsy (empty string or undefined)
     if (!baseAmount) {
+      setQuoteAmount("0");
+      setQuoteResponse(null);
+      setButtonDisabled(true); // Optionally disable the button when no base amount
       return;
     }
+
     setFetchingQuote(true);
     axios
       .get(
@@ -45,13 +54,29 @@ export function TokenSwap({
         );
         setFetchingQuote(false);
         setQuoteResponse(res.data);
+        setButtonDisabled(false); // Enable button when a valid quote is received
+      })
+      .catch((error) => {
+        console.error("Error fetching quote:", error);
+        setFetchingQuote(false);
+        setQuoteAmount("0"); // Handle errors by setting quoteAmount back to 0
+        setQuoteResponse(null);
+        setButtonDisabled(true); // Disable button on error
       });
   }, [baseAsset, quoteAsset, baseAmount]);
 
   return (
     <div className="bg-stone-50 rounded-xl p-4 sm:p-6">
-      <div className="mx-auto max-w-xl space-y-4">
-        <div className="space-y-2">
+      <div className="flex items-center gap-2">
+        <button
+          onClick={goBack}
+          className="text-gray-600 hover:text-gray-900 pb-2 md:p-0"
+        >
+          <ArrowLeft className="h-5 w-5" />
+        </button>
+      </div>
+      <div className="mx-auto max-w-xl">
+        <div className="space-y-4">
           {/*header*/}
           <div className="flex items-center justify-between">
             <h1 className="text-lg font-semibold">Swap Tokens</h1>
@@ -83,19 +108,6 @@ export function TokenSwap({
               title={"You Pay:"}
               topBorderEnabled={true}
               bottomBorderEnabled={false}
-              subtitle={
-                <div className="text-slate-500 pt-1 text-sm pl-1 flex">
-                  <div className="font-normal pr-1">Current Balance:</div>
-                  <div className="font-semibold">
-                    {
-                      tokenBalances?.tokens.find(
-                        (x) => x.name === baseAsset.name
-                      )?.balance
-                    }{" "}
-                    {baseAsset.name}
-                  </div>
-                </div>
-              }
             />
 
             {/*center icon */}
@@ -129,20 +141,7 @@ export function TokenSwap({
             />
           </div>
 
-          <div className="flex items-center justify-between py-2">
-            <button className="flex items-center gap-1 text-sm text-gray-600 hover:text-gray-900">
-              <ChevronDown className="h-4 w-4" />
-              View Swap Details
-            </button>
-            <button className="text-gray-600 hover:text-gray-900">
-              <Settings className="h-5 w-5" />
-            </button>
-          </div>
-
-          <div className="flex gap-3">
-            <button className="rounded-lg border border-gray-200 px-4 py-2 text-sm font-medium text-gray-600 hover:bg-gray-50">
-              Cancel
-            </button>
+          <div className="w-full">
             <SwapButton
               onClick={async () => {
                 // trigger swap
@@ -157,12 +156,12 @@ export function TokenSwap({
                   alert("Error while sending a txn");
                 }
               }}
+              disabled={buttonDisabled}
             >
-              Confirm & Swap
+              Swap
             </SwapButton>
           </div>
         </div>
-        {/*header*/}
       </div>
     </div>
   );
@@ -201,10 +200,10 @@ function SwapInputRow({
     <>
       <div className="p-4">
         <div className="text-sm text-gray-600">{title}</div>
-        <div className="mt-2 flex items-center justify-between">
+        <div className="mt-2 flex items-center justify-between gap-2">
           <button
             onClick={() => setIsAssetSelectorOpen(true)}
-            className="flex items-center gap-2 rounded-lg bg-gray-100 px-3 py-2 hover:bg-gray-200 transition-colors"
+            className="flex items-center gap-2 rounded-lg bg-gray-100 px-3 py-2 hover:bg-gray-200 transition-colors shrink-0"
           >
             <Image
               src={selectedToken.image}
@@ -216,17 +215,21 @@ function SwapInputRow({
             <span className="font-medium">{selectedToken.name}</span>
             <ChevronDown className="h-4 w-4 text-gray-600" />
           </button>
-          <input
-            disabled={inputDisabled}
-            onChange={(e) => {
-              onAmountChange?.(e.target.value);
-            }}
-            placeholder="0"
-            type="text"
-            dir="rtl"
-            value={inputLoading ? "Loading" : amount}
-            className="w-[240px] text-right text-3xl text-gray-400 focus:outline-none disabled:bg-white"
-          />
+          {inputLoading ? (
+            <Skeleton className="h-9 w-20" />
+          ) : (
+            <input
+              disabled={inputDisabled}
+              onChange={(e) => {
+                onAmountChange?.(e.target.value);
+              }}
+              placeholder="0"
+              type="text"
+              dir="rtl"
+              value={inputLoading ? "Loading" : amount}
+              className="w-full text-right text-3xl text-gray-400 focus:outline-none disabled:bg-white"
+            />
+          )}
         </div>
         <div className="mt-1 flex justify-between text-sm text-gray-500">
           <span>
@@ -238,7 +241,7 @@ function SwapInputRow({
             {selectedToken.name}
           </span>
           {inputDisabled ? null : (
-            <button className="text-gray-600 ">Max</button>
+            <button className="text-gray-600">Max</button>
           )}
         </div>
       </div>
